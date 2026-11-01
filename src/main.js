@@ -1,60 +1,148 @@
 import './style.css'
-import heroImg from './assets/hero.png'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import { setupCounter } from './counter.js'
+import { products } from './products.js'
+import {
+  addToCart,
+  changeQuantity,
+  removeFromCart,
+  getCartItems,
+  getCartTotal,
+  getCartCount,
+} from './cart.js'
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+// ---------- DOM elements ----------
+const productGrid = document.querySelector('.product-grid')
+const resultCount = document.querySelector('.result-count')
+const catalogTotal = document.querySelector('.catalog-total')
+const priceFilter = document.querySelector('.price-filter')
+const categoryFilter = document.querySelector('.category-filter')
+const sortSelect = document.querySelector('.sort-select')
+const resetButton = document.querySelector('.reset-filters')
+const cartList = document.querySelector('.cart-list')
+const cartEmpty = document.querySelector('.cart-empty')
+const cartTotal = document.querySelector('.cart-total')
+const cartCount = document.querySelector('.cart-count')
 
-<div class="ticks"></div>
+const formatPrice = (value) => `$${value}`
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+// ---------- Filter ----------
+const priceRanges = {
+  all: () => true,
+  'under-50': (price) => price < 50,
+  '50-100': (price) => price >= 50 && price <= 100,
+  'over-100': (price) => price > 100,
+}
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+function filterProducts(list, priceRange, category) {
+  return list.filter(
+    (product) =>
+      priceRanges[priceRange](product.price) &&
+      (category === 'all' || product.category === category),
+  )
+}
 
-setupCounter(document.querySelector('#counter'))
+// ---------- Sort ----------
+function sortProducts(list, order) {
+  if (order === 'price-asc') {
+    return [...list].sort((a, b) => a.price - b.price)
+  }
+  if (order === 'price-desc') {
+    return [...list].sort((a, b) => b.price - a.price)
+  }
+  return list
+}
+
+// ---------- Map: products -> HTML cards ----------
+function createProductCard(product) {
+  return `
+    <article class="product-card">
+      <h3 class="product-name">${product.name}</h3>
+      <p class="product-category">${product.category}</p>
+      <p class="product-price">${formatPrice(product.price)}</p>
+      <button class="button" type="button" data-id="${product.id}">
+        Add to cart
+      </button>
+    </article>
+  `
+}
+
+function renderProducts() {
+  const filtered = filterProducts(
+    products,
+    priceFilter.value,
+    categoryFilter.value,
+  )
+  const visible = sortProducts(filtered, sortSelect.value)
+
+  productGrid.innerHTML = visible.length
+    ? visible.map(createProductCard).join('')
+    : '<p class="no-results">No products match these filters.</p>'
+
+  resultCount.textContent = `Showing ${visible.length} of ${products.length} products`
+}
+
+// ---------- Cart ----------
+function createCartItem(item) {
+  return `
+    <li class="cart-item">
+      <span class="cart-item-name">${item.name}</span>
+      <span class="cart-item-price">${formatPrice(item.price)}</span>
+      <div class="quantity-controls">
+        <button class="quantity-button" type="button" data-action="decrease" data-id="${item.id}"
+          aria-label="Decrease quantity of ${item.name}">−</button>
+        <span class="quantity" aria-label="Quantity">${item.quantity}</span>
+        <button class="quantity-button" type="button" data-action="increase" data-id="${item.id}"
+          aria-label="Increase quantity of ${item.name}">+</button>
+      </div>
+      <span class="cart-item-subtotal">${formatPrice(item.price * item.quantity)}</span>
+      <button class="remove-button" type="button" data-action="remove" data-id="${item.id}"
+        aria-label="Remove ${item.name} from cart">Remove</button>
+    </li>
+  `
+}
+
+function renderCart() {
+  const items = getCartItems()
+  cartList.innerHTML = items.map(createCartItem).join('')
+  cartEmpty.hidden = items.length > 0
+  cartTotal.textContent = formatPrice(getCartTotal())
+  cartCount.textContent = getCartCount()
+}
+
+// ---------- Events ----------
+// One listener on the grid handles every "Add to cart" button (event delegation)
+productGrid.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-id]')
+  if (!button) return
+  addToCart(Number(button.dataset.id))
+  renderCart()
+})
+
+cartList.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-action]')
+  if (!button) return
+  const id = Number(button.dataset.id)
+  const { action } = button.dataset
+
+  if (action === 'increase') changeQuantity(id, 1)
+  if (action === 'decrease') changeQuantity(id, -1)
+  if (action === 'remove') removeFromCart(id)
+  renderCart()
+})
+
+for (const control of [priceFilter, categoryFilter, sortSelect]) {
+  control.addEventListener('change', renderProducts)
+}
+
+resetButton.addEventListener('click', () => {
+  priceFilter.value = 'all'
+  categoryFilter.value = 'all'
+  sortSelect.value = 'default'
+  renderProducts()
+})
+
+// ---------- Start ----------
+const total = products.reduce((sum, product) => sum + product.price, 0)
+catalogTotal.textContent = `Total value of all products: ${formatPrice(total)}`
+
+renderProducts()
+renderCart()

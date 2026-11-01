@@ -4,10 +4,147 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>shopboard</title>
+    <meta name="description" content="ShopBoard — bags, shoes and accessories for every day." />
+    <title>ShopBoard</title>
   </head>
   <body>
-    <div id="app"></div>
+    <header class="site-header">
+      <a class="logo" href="#hero">ShopBoard</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="#hero">Home</a></li>
+          <li><a class="nav-link" href="#products">Products</a></li>
+          <li>
+            <a class="nav-link" href="#cart">Cart (<span class="cart-count">0</span>)</a>
+          </li>
+          <li><a class="nav-link" href="#register">Register</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero" aria-labelledby="hero-title">
+        <h1 class="hero-title" id="hero-title">Everyday goods, picked with care</h1>
+        <p class="hero-text">
+          Bags, shoes and accessories that are built to last — at prices that make sense.
+        </p>
+        <a class="button" href="#products">Shop products</a>
+      </section>
+
+      <section class="products" id="products" aria-labelledby="products-title">
+        <h2 class="section-title" id="products-title">Products</h2>
+        <p class="catalog-total"></p>
+
+        <form class="filters" aria-label="Filter and sort products">
+          <p class="form-field">
+            <label for="price-filter">Price</label>
+            <select class="price-filter" id="price-filter" name="price">
+              <option value="all">All prices</option>
+              <option value="under-50">Under $50</option>
+              <option value="50-100">$50 – $100</option>
+              <option value="over-100">Over $100</option>
+            </select>
+          </p>
+
+          <p class="form-field">
+            <label for="category-filter">Category</label>
+            <select class="category-filter" id="category-filter" name="category">
+              <option value="all">All categories</option>
+              <option value="Bags">Bags</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Accessories">Accessories</option>
+            </select>
+          </p>
+
+          <p class="form-field">
+            <label for="sort-select">Sort by</label>
+            <select class="sort-select" id="sort-select" name="sort">
+              <option value="default">Default</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </p>
+
+          <button class="button button-secondary reset-filters" type="button">Reset</button>
+        </form>
+
+        <p class="result-count" aria-live="polite"></p>
+
+        <!-- Product cards are created in src/main.js with map() -->
+        <div class="product-grid"></div>
+      </section>
+
+      <section class="cart" id="cart" aria-labelledby="cart-title">
+        <h2 class="section-title" id="cart-title">Shopping cart</h2>
+        <p class="cart-empty">Your cart is empty.</p>
+        <ul class="cart-list"></ul>
+        <p class="cart-summary" aria-live="polite">
+          Total: <strong class="cart-total">$0</strong>
+        </p>
+      </section>
+
+      <section class="register" id="register" aria-labelledby="register-title">
+        <h2 class="section-title" id="register-title">Create an account</h2>
+        <form class="register-form" action="#" method="post">
+          <p class="form-field">
+            <label for="name">Full name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              minlength="2"
+            />
+          </p>
+
+          <p class="form-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </p>
+
+          <p class="form-field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              required
+              minlength="8"
+              aria-describedby="password-hint"
+            />
+            <small class="form-hint" id="password-hint">At least 8 characters.</small>
+          </p>
+
+          <p class="form-field">
+            <label for="phone">Phone (optional)</label>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              autocomplete="tel"
+              pattern="[0-9+ ()-]{7,20}"
+              title="7–20 digits; spaces, +, - and parentheses allowed."
+              aria-describedby="phone-hint"
+            />
+            <small class="form-hint" id="phone-hint">Digits, spaces, +, - and ( ) only.</small>
+          </p>
+
+          <p class="form-field form-field-check">
+            <input id="terms" name="terms" type="checkbox" required />
+            <label for="terms">I agree to the terms and conditions</label>
+          </p>
+
+          <button class="button" type="submit">Register</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 ShopBoard</p>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
