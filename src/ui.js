@@ -18,6 +18,9 @@ const clearCartButton = document.querySelector('.clear-cart')
 
 const formatPrice = (value) => `$${value}`
 
+// One illustration per category; replace with real photos in public/images/
+const productImage = (product) => `/images/${product.category.toLowerCase()}.svg`
+
 // ---------- Reading the controls ----------
 export function getFilterValues() {
   return {
@@ -32,6 +35,8 @@ export function getFilterValues() {
 function createProductCard(product) {
   return `
     <article class="product-card">
+      <img class="product-image" src="${productImage(product)}" alt=""
+        width="400" height="500" />
       <h3 class="product-name">${product.name}</h3>
       <p class="product-category">${product.category}</p>
       <p class="product-price">${formatPrice(product.price)}</p>

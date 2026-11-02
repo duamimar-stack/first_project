@@ -4,12 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ShopBoard — bags, shoes and accessories for every day." />
-    <title>ShopBoard</title>
+    <meta name="description" content="DH Bags — refined handbags and accessories for women." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap"
+    />
+    <title>DH Bags</title>
   </head>
   <body>
     <header class="site-header">
-      <a class="logo" href="#hero">ShopBoard</a>
+      <a class="logo" href="#hero" aria-label="DH Bags, home">
+        <span class="logo-mark" aria-hidden="true">DH</span>
+        <span class="logo-text">DH Bags</span>
+      </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="nav-list">
           <li><a class="nav-link" href="#hero">Home</a></li>
@@ -24,14 +33,20 @@
 
     <main>
       <section class="hero" id="hero" aria-labelledby="hero-title">
-        <h1 class="hero-title" id="hero-title">Everyday goods, picked with care</h1>
-        <p class="hero-text">
-          Bags, shoes and accessories that are built to last — at prices that make sense.
-        </p>
-        <a class="button" href="#products">Shop products</a>
+        <div class="hero-content">
+          <p class="eyebrow">New season</p>
+          <h1 class="hero-title" id="hero-title">Quiet elegance, carried every day</h1>
+          <p class="hero-text">
+            Handbags and accessories in clean lines and fine materials, made to be worn for
+            years.
+          </p>
+          <a class="button" href="#products">Discover the collection</a>
+        </div>
+        <img class="hero-image" src="/images/bags.svg" alt="" width="400" height="500" />
       </section>
 
       <section class="products" id="products" aria-labelledby="products-title">
+        <p class="eyebrow">The collection</p>
         <h2 class="section-title" id="products-title">Products</h2>
         <p class="catalog-total"></p>
 
@@ -155,7 +170,8 @@
     </main>
 
     <footer class="site-footer">
-      <p>&copy; 2026 ShopBoard</p>
+      <p class="footer-logo">DH Bags</p>
+      <p>&copy; 2026 DH Bags. All rights reserved.</p>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
