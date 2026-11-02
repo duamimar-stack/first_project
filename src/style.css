@@ -203,6 +203,7 @@ a {
 }
 
 .filters select,
+.filters input,
 .register-form input:not([type='checkbox']) {
   font: inherit;
   font-size: var(--font-m);
@@ -396,9 +397,18 @@ input:focus-visible {
 }
 
 /* ---------- Larger screens ---------- */
+.cart-summary {
+  margin-bottom: var(--space-m);
+}
+
+/* .button sets display, which would otherwise override the hidden attribute */
+.clear-cart[hidden] {
+  display: none;
+}
+
 @media (min-width: 600px) {
   .filters {
-    grid-template-columns: repeat(3, 1fr) auto;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .product-grid {
@@ -422,6 +432,10 @@ input:focus-visible {
 
   .hero {
     padding-block: 80px;
+  }
+
+  .filters {
+    grid-template-columns: repeat(4, 1fr) auto;
   }
 
   .product-grid {

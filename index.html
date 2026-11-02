@@ -37,6 +37,18 @@
 
         <form class="filters" aria-label="Filter and sort products">
           <p class="form-field">
+            <label for="search-input">Search</label>
+            <input
+              class="search-input"
+              id="search-input"
+              name="search"
+              type="search"
+              placeholder="Product name"
+              autocomplete="off"
+            />
+          </p>
+
+          <p class="form-field">
             <label for="price-filter">Price</label>
             <select class="price-filter" id="price-filter" name="price">
               <option value="all">All prices</option>
@@ -81,6 +93,7 @@
         <p class="cart-summary" aria-live="polite">
           Total: <strong class="cart-total">$0</strong>
         </p>
+        <button class="button button-secondary clear-cart" type="button">Clear cart</button>
       </section>
 
       <section class="register" id="register" aria-labelledby="register-title">

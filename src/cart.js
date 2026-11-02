@@ -54,6 +54,11 @@ export function removeFromCart(id) {
   saveCart()
 }
 
+export function clearCart() {
+  cart = []
+  saveCart()
+}
+
 // Joins each cart entry with its product so the UI gets name and price too
 export function getCartItems() {
   return cart.map((entry) => ({
