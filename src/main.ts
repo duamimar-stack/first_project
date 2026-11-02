@@ -1,7 +1,7 @@
 // Connects the data (products), the logic (filters, cart) and the page (ui)
-import './style.css'
-import { products } from './products.js'
-import { filterProducts, sortProducts } from './filters.js'
+import './style.css';
+import { products } from './products.ts';
+import { filterProducts, sortProducts } from './filters.ts';
 import {
   addToCart,
   changeQuantity,
@@ -10,14 +10,14 @@ import {
   getCartItems,
   getCartTotal,
   getCartCount,
-} from './cart.js'
+} from './cart.ts';
 import {
   getFilterValues,
   renderProducts,
   renderCatalogTotal,
   renderCart,
   bindEvents,
-} from './ui.js'
+} from './ui.ts';
 
 function updateProducts() {
   const { search, price, category, sort } = getFilterValues()

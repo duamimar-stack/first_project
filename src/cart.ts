@@ -1,4 +1,4 @@
-import { products } from './products.js'
+import { products } from './products.ts'
 
 const STORAGE_KEY = 'shopboard-cart'
 
