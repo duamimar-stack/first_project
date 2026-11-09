@@ -7,9 +7,7 @@ export function addItem(cart: Cart, id: number): Cart {
   if (!exists) {
     return [...cart, { id, quantity: 1 }];
   }
-  return cart.map((item) =>
-    item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
-  );
+  return cart.map((item) => (item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
 }
 
 // A quantity that drops to 0 removes the item

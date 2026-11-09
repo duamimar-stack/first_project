@@ -33,7 +33,7 @@ function createProductCard(product: Product): string {
       <h3 class="product-name">${product.name}</h3>
       <p class="product-category">${product.category}</p>
       <p class="product-price">${formatPrice(product.price)}</p>
-      <button class="button" type="button" data-id="${product.id}"
+      <button class="button button-secondary" type="button" data-id="${product.id}"
         ${product.inStock ? "" : "disabled"}>
         ${product.inStock ? "Add to cart" : "Out of stock"}
       </button>
