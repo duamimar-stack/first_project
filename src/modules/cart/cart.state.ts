@@ -1,22 +1,11 @@
 // Holds the cart and keeps it in localStorage. No document.
 import { addItem, changeQuantity as changeItemQuantity, removeItem } from "./cart.logic";
-import type { Cart, CartItem } from "./cart.types";
+import { isCartItem } from "./cart.guards";
+import type { Cart } from "./cart.types";
 
 const STORAGE_KEY = "shopboard-cart";
 
 let cart: Cart = loadCart();
-
-// localStorage can hold anything, so check each saved item before trusting it
-function isCartItem(value: unknown): value is CartItem {
-  const item = value as CartItem;
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    Number.isInteger(item.id) &&
-    Number.isInteger(item.quantity) &&
-    item.quantity > 0
-  );
-}
 
 function loadCart(): Cart {
   try {

@@ -1,13 +1,14 @@
 // Draws the cart and hears its buttons. Does not calculate or save.
 import { formatPrice } from "../../shared/format/price";
 import { getElement } from "../../shared/ui/dom";
+import { isCartAction } from "./cart.guards";
 import type { CartAction, CartLine } from "./cart.types";
 
-const cartList = getElement<HTMLUListElement>(".cart-list");
-const cartEmpty = getElement<HTMLElement>(".cart-empty");
-const cartTotalText = getElement<HTMLElement>(".cart-total");
-const cartCountText = getElement<HTMLElement>(".cart-count");
-const clearCartButton = getElement<HTMLButtonElement>(".clear-cart");
+const cartList = getElement(".cart-list", HTMLUListElement);
+const cartEmpty = getElement(".cart-empty", HTMLElement);
+const cartTotalText = getElement(".cart-total", HTMLElement);
+const cartCountText = getElement(".cart-count", HTMLElement);
+const clearCartButton = getElement(".clear-cart", HTMLButtonElement);
 
 function createCartLine(line: CartLine): string {
   return `
@@ -45,9 +46,12 @@ interface CartHandlers {
 // Called once from main.ts
 export function bindCartEvents({ onCartAction, onClearCart }: CartHandlers): void {
   cartList.addEventListener("click", (event) => {
-    const button = (event.target as Element).closest<HTMLButtonElement>("button[data-action]");
-    if (!button) return;
-    onCartAction(button.dataset.action as CartAction, Number(button.dataset.id));
+    if (!(event.target instanceof Element)) return;
+    const button = event.target.closest("button[data-action]");
+    if (!(button instanceof HTMLButtonElement)) return;
+    const action = button.dataset.action;
+    if (!isCartAction(action)) return;
+    onCartAction(action, Number(button.dataset.id));
   });
 
   clearCartButton.addEventListener("click", onClearCart);

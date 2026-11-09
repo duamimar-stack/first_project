@@ -1,17 +1,18 @@
 // Draws products and reads the filter controls. Does not calculate or save.
 import { formatPrice } from "../../shared/format/price";
 import { getElement } from "../../shared/ui/dom";
+import { isCategoryFilter, isPriceRange, isSortOrder } from "./products.guards";
 import type { Category, Product, ProductFilters } from "./products.types";
 
-const productGrid = getElement<HTMLElement>(".product-grid");
-const resultCount = getElement<HTMLElement>(".result-count");
-const catalogTotalText = getElement<HTMLElement>(".catalog-total");
-const filtersForm = getElement<HTMLFormElement>(".filters");
-const searchInput = getElement<HTMLInputElement>(".search-input");
-const priceFilter = getElement<HTMLSelectElement>(".price-filter");
-const categoryFilter = getElement<HTMLSelectElement>(".category-filter");
-const sortSelect = getElement<HTMLSelectElement>(".sort-select");
-const resetButton = getElement<HTMLButtonElement>(".reset-filters");
+const productGrid = getElement(".product-grid", HTMLElement);
+const resultCount = getElement(".result-count", HTMLElement);
+const catalogTotalText = getElement(".catalog-total", HTMLElement);
+const filtersForm = getElement(".filters", HTMLFormElement);
+const searchInput = getElement(".search-input", HTMLInputElement);
+const priceFilter = getElement(".price-filter", HTMLSelectElement);
+const categoryFilter = getElement(".category-filter", HTMLSelectElement);
+const sortSelect = getElement(".sort-select", HTMLSelectElement);
+const resetButton = getElement(".reset-filters", HTMLButtonElement);
 
 // One illustration per category, served from public/images/
 const categoryImages: Record<Category, string> = {
@@ -40,13 +41,17 @@ function createProductCard(product: Product): string {
   `;
 }
 
-// The option values in index.html match the ProductFilters types
+// The option values in index.html match the ProductFilters types;
+// an unexpected value falls back to the default option
 export function getFilterValues(): ProductFilters {
+  const price = priceFilter.value;
+  const category = categoryFilter.value;
+  const sort = sortSelect.value;
   return {
     search: searchInput.value,
-    price: priceFilter.value as ProductFilters["price"],
-    category: categoryFilter.value as ProductFilters["category"],
-    sort: sortSelect.value as ProductFilters["sort"],
+    price: isPriceRange(price) ? price : "all",
+    category: isCategoryFilter(category) ? category : "all",
+    sort: isSortOrder(sort) ? sort : "default",
   };
 }
 
@@ -81,8 +86,9 @@ interface ProductHandlers {
 export function bindProductEvents({ onFiltersChange, onAddToCart }: ProductHandlers): void {
   // One listener on the grid handles every "Add to cart" button (event delegation)
   productGrid.addEventListener("click", (event) => {
-    const button = (event.target as Element).closest<HTMLButtonElement>("button[data-id]");
-    if (!button) return;
+    if (!(event.target instanceof Element)) return;
+    const button = event.target.closest("button[data-id]");
+    if (!(button instanceof HTMLButtonElement)) return;
     onAddToCart(Number(button.dataset.id));
   });
 
