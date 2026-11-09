@@ -31,6 +31,9 @@ import {
 import { cartCount, cartTotal, toCartLines } from "./modules/cart/cart.logic";
 import { bindCartEvents, renderCart } from "./modules/cart/cart.ui";
 
+// Register
+import { bindRegisterEvents } from "./modules/register/register.ui";
+
 let products: Product[] = [];
 
 function updateProducts(): void {
@@ -69,6 +72,12 @@ bindCartEvents({
   },
 });
 
+bindRegisterEvents({
+  onRegister() {
+    showToast("Demo form: no account was created", 4000);
+  },
+});
+
 async function start(): Promise<void> {
   try {
     products = await getProducts(); // get
@@ -82,4 +91,4 @@ async function start(): Promise<void> {
   updateCart();
 }
 
-start();
+void start();
