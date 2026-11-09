@@ -1,5 +1,4 @@
 // Draws products and reads the filter controls. Does not calculate or save.
-import "../../styles/products.css";
 import { formatPrice } from "../../shared/format/price";
 import { getElement } from "../../shared/ui/dom";
 import type { Category, Product, ProductFilters } from "./products.types";
@@ -14,7 +13,7 @@ const categoryFilter = getElement<HTMLSelectElement>(".category-filter");
 const sortSelect = getElement<HTMLSelectElement>(".sort-select");
 const resetButton = getElement<HTMLButtonElement>(".reset-filters");
 
-// One illustration per category; replace with real photos in ./images/
+// One illustration per category, served from public/images/
 const categoryImages: Record<Category, string> = {
   Bags: "/images/bags.svg",
   Shoes: "/images/shoes.svg",
