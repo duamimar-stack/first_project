@@ -45,7 +45,8 @@ there. Move code to `src/shared/` only when a second feature needs it.
 
 - Do not change the original products array when sorting.
 - Add event listeners only one time, not every time the page updates.
-- Only one file can change the page (the DOM).
+- Only UI files can change the page (the DOM): one `<feature>.ui.ts` per feature, plus
+  `shared/ui/toast.ts` for toasts.
 
 ## TypeScript
 

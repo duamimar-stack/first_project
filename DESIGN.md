@@ -5,8 +5,9 @@ values, so a change in one place reaches the whole site.
 
 ## Reference and direction
 
-The reference is the editorial look of luxury fashion stores: a lot of white space, large serif
-headlines, small uppercase labels, square corners and very little color.
+The reference is the minimal store look of Celine: a lot of white space, small uppercase labels,
+square corners and very little color. The large serif headlines come from fashion magazines such
+as Vogue.
 
 ShopBoard keeps that calm look and improves on it where those stores are often weak:
 
