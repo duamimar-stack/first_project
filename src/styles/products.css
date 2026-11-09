@@ -3,7 +3,7 @@
 .catalog-total,
 .result-count {
   font-size: var(--font-xs);
-  letter-spacing: 0.1em;
+  letter-spacing: var(--tracking-medium);
   text-transform: uppercase;
   margin-bottom: var(--space-l);
 }
@@ -59,17 +59,6 @@
   margin-bottom: var(--space-s);
 }
 
-/* Outlined "Add to cart" button, filled on hover */
-.product-card .button {
-  color: var(--black);
-  background: transparent;
-}
-
-.product-card .button:hover {
-  color: var(--white);
-  background: var(--black);
-}
-
 /* Loading, empty and error messages inside the grid */
 .no-results {
   font-family: var(--serif);
@@ -96,12 +85,4 @@
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-
-.product-card .button:disabled {
-  color: var(--black);
-  background: transparent;
-  border-color: currentColor;
-  opacity: 0.4;
-  cursor: not-allowed;
 }

@@ -9,28 +9,36 @@
   --gold-text: #7a5c2e; /* gold that is dark enough for small text */
   --text: #4a4a4a;
   --text-h: var(--black);
+  --text-muted: #6f6f6f; /* placeholders */
+  --text-on-dark: #b5b5b5; /* small text on black */
   --bg: var(--white);
   --border: #e6e1d8;
 
-  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --sans: system-ui, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 
   --space-xs: 4px;
   --space-s: 8px;
+  --space-field: 12px; /* inside form controls */
   --space-m: 16px;
   --space-l: 32px;
   --space-xl: 64px;
   --space-xxl: 96px;
   --page-width: 1280px;
+  --tap-size: 44px; /* smallest button a finger can hit comfortably */
 
   --font-xs: 12px;
   --font-s: 14px;
   --font-m: 16px;
   --font-l: 20px;
   --font-h3: 22px;
+  --font-logo: 26px;
   --font-h2: 36px;
   --font-h1: 44px;
 
+  --tracking-tight: 0.05em;
+  --tracking-medium: 0.1em;
+  --tracking-logo: 0.12em;
   --tracking-wide: 0.2em;
   --transition: 0.25s ease;
 
@@ -125,10 +133,10 @@ img {
 }
 
 .form-field select,
-.form-field input:not([type='checkbox']) {
+.form-field input:not([type="checkbox"]) {
   font: inherit;
   width: 100%;
-  padding: 12px 0;
+  padding: var(--space-field) 0;
   color: var(--text-h);
   background: transparent;
   border: 0;
@@ -137,7 +145,7 @@ img {
 }
 
 .form-field input::placeholder {
-  color: #8a8a8a;
+  color: var(--text-muted);
 }
 
 .form-hint {
@@ -154,7 +162,7 @@ img {
     color var(--transition),
     border-color var(--transition);
   display: inline-block;
-  padding: 14px 32px;
+  padding: var(--space-m) var(--space-l);
   font-size: var(--font-xs);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
@@ -181,6 +189,15 @@ img {
   background: var(--black);
 }
 
+/* After the hover rules, so a disabled button does not react to the mouse */
+.button:disabled {
+  color: var(--black);
+  background: transparent;
+  border-color: currentColor;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 /* Visible keyboard focus on every interactive element */
 a:focus-visible,
 button:focus-visible,
@@ -189,4 +206,3 @@ input:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
 }
-
