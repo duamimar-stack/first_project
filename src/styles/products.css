@@ -1,0 +1,107 @@
+/* Styles owned by the products module: filters, grid and product cards */
+
+.catalog-total,
+.result-count {
+  font-size: var(--font-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-l);
+}
+
+/* ---------- Filters ---------- */
+.filters {
+  display: grid;
+  gap: var(--space-l);
+  margin-bottom: var(--space-l);
+  align-items: end;
+}
+
+/* ---------- Product cards ---------- */
+.product-grid {
+  display: grid;
+  gap: var(--space-xl) var(--space-l);
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.product-image {
+  order: -2; /* stays first, above the category label moved up with order: -1 */
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  margin-bottom: var(--space-m);
+  transition: opacity var(--transition);
+}
+
+.product-card:hover .product-image {
+  opacity: 0.85;
+}
+
+.product-name {
+  margin: 0;
+  font-size: var(--font-h3);
+}
+
+.product-category {
+  order: -1;
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--gold-text);
+}
+
+.product-price {
+  color: var(--text-h);
+  margin-bottom: var(--space-s);
+}
+
+/* Outlined "Add to cart" button, filled on hover */
+.product-card .button {
+  color: var(--black);
+  background: transparent;
+}
+
+.product-card .button:hover {
+  color: var(--white);
+  background: var(--black);
+}
+
+/* Loading, empty and error messages inside the grid */
+.no-results {
+  font-family: var(--serif);
+  font-size: var(--font-l);
+  padding: var(--space-l) 0;
+}
+
+/* ---------- Larger screens ---------- */
+@media (min-width: 600px) {
+  .filters {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .filters {
+    grid-template-columns: repeat(4, 1fr) auto;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.product-card .button:disabled {
+  color: var(--black);
+  background: transparent;
+  border-color: currentColor;
+  opacity: 0.4;
+  cursor: not-allowed;
+}

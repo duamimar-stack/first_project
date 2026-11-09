@@ -1,0 +1,192 @@
+/* Shared by every module: design tokens, base elements, form fields, buttons, focus */
+
+/* ---------- Design tokens: DH Bags ---------- */
+:root {
+  --black: #111111;
+  --white: #ffffff;
+  --ivory: #f5f1ea;
+  --gold: #b08d57; /* lines and accents only */
+  --gold-text: #7a5c2e; /* gold that is dark enough for small text */
+  --text: #4a4a4a;
+  --text-h: var(--black);
+  --bg: var(--white);
+  --border: #e6e1d8;
+
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 32px;
+  --space-xl: 64px;
+  --space-xxl: 96px;
+  --page-width: 1280px;
+
+  --font-xs: 12px;
+  --font-s: 14px;
+  --font-m: 16px;
+  --font-l: 20px;
+  --font-h3: 22px;
+  --font-h2: 36px;
+  --font-h1: 44px;
+
+  --tracking-wide: 0.2em;
+  --transition: 0.25s ease;
+
+  font: var(--font-m) / 1.6 var(--sans);
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --font-h2: 48px;
+    --font-h1: 72px;
+  }
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+main {
+  flex-grow: 1;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  color: var(--text-h);
+  line-height: 1.1;
+}
+
+h1 {
+  font-size: var(--font-h1);
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--font-h2);
+  margin: 0 0 var(--space-l);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--text-h);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Small uppercase label above headings */
+.eyebrow {
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--gold-text);
+  margin-bottom: var(--space-m);
+}
+
+/* ---------- Form controls (shared by the filters and the register form) ---------- */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.form-field label {
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-h);
+}
+
+.form-field select,
+.form-field input:not([type='checkbox']) {
+  font: inherit;
+  width: 100%;
+  padding: 12px 0;
+  color: var(--text-h);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--black);
+  border-radius: 0;
+}
+
+.form-field input::placeholder {
+  color: #8a8a8a;
+}
+
+.form-hint {
+  font-size: var(--font-s);
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 0;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: var(--white);
+  background: var(--black);
+  border: 1px solid var(--black);
+}
+
+.button:hover {
+  color: var(--black);
+  background: transparent;
+  border-color: var(--black);
+}
+
+.button-secondary {
+  color: var(--black);
+  background: transparent;
+}
+
+.button-secondary:hover {
+  color: var(--white);
+  background: var(--black);
+}
+
+/* Visible keyboard focus on every interactive element */
+a:focus-visible,
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+

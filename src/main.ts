@@ -1,57 +1,85 @@
-// Connects the data (products), the logic (filters, cart) and the page (ui)
-import './style.css';
-import { products } from './products.ts';
-import { filterProducts, sortProducts } from './filters.ts';
+// Connects the modules. Has no logic of its own.
+// Shared (styles first, so each module's own CSS loads after them)
+import "./styles/base.css";
+import "./styles/layout.css";
+import "./styles/products.css";
+import "./styles/cart.css";
+import "./styles/toast.css";
+import { showToast } from "./shared/ui/toast";
+
+// Products
+import type { Product } from "./modules/products/products.types";
+import { getProducts } from "./modules/products/products.api";
+import { catalogTotal, visibleProducts } from "./modules/products/products.logic";
+import {
+  bindProductEvents,
+  getFilterValues,
+  renderCatalogTotal,
+  renderProducts,
+  renderProductsError,
+} from "./modules/products/products.ui";
+
+// Cart
+import type { CartAction } from "./modules/cart/cart.types";
 import {
   addToCart,
   changeQuantity,
-  removeFromCart,
   clearCart,
-  getCartItems,
-  getCartTotal,
-  getCartCount,
-} from './cart.ts';
-import {
-  getFilterValues,
-  renderProducts,
-  renderCatalogTotal,
-  renderCart,
-  bindEvents,
-} from './ui.ts';
+  getCart,
+  removeFromCart,
+} from "./modules/cart/cart.state";
+import { cartCount, cartTotal, toCartLines } from "./modules/cart/cart.logic";
+import { bindCartEvents, renderCart } from "./modules/cart/cart.ui";
 
-function updateProducts() {
-  const { search, price, category, sort } = getFilterValues()
-  const filtered = filterProducts(products, search, price, category)
-  renderProducts(sortProducts(filtered, sort), products.length)
+let products: Product[] = [];
+
+function updateProducts(): void {
+  renderProducts(visibleProducts(products, getFilterValues()), products.length);
 }
 
-function updateCart() {
-  renderCart(getCartItems(), getCartTotal(), getCartCount())
+function updateCart(): void {
+  const lines = toCartLines(getCart(), products);
+  renderCart(lines, cartTotal(lines), cartCount(lines));
 }
 
-const cartActions = {
+const cartActions: Record<CartAction, (id: number) => void> = {
   increase: (id) => changeQuantity(id, 1),
   decrease: (id) => changeQuantity(id, -1),
   remove: (id) => removeFromCart(id),
-}
+};
 
-bindEvents({
+// Listeners are added once, here, never inside an update
+bindProductEvents({
   onFiltersChange: updateProducts,
   onAddToCart(id) {
-    addToCart(id)
-    updateCart()
+    addToCart(id);
+    updateCart();
+    showToast("Added to cart");
   },
+});
+
+bindCartEvents({
   onCartAction(action, id) {
-    cartActions[action](id)
-    updateCart()
+    cartActions[action](id);
+    updateCart();
   },
   onClearCart() {
-    clearCart()
-    updateCart()
+    clearCart();
+    updateCart();
   },
-})
+});
 
-// ---------- Start ----------
-renderCatalogTotal(products.reduce((sum, product) => sum + product.price, 0))
-updateProducts()
-updateCart()
+async function start(): Promise<void> {
+  try {
+    products = await getProducts(); // get
+  } catch (error) {
+    console.error(error);
+    renderProductsError("Products could not be loaded. Please refresh the page.");
+    return;
+  }
+  renderCatalogTotal(catalogTotal(products)); // draw
+  updateProducts();
+  updateCart();
+}
+
+start();

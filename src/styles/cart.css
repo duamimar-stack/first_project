@@ -1,0 +1,107 @@
+/* Styles owned by the cart module: cart lines, quantity controls and total */
+
+.cart-empty {
+  font-family: var(--serif);
+  font-size: var(--font-l);
+  padding-bottom: var(--space-l);
+}
+
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-l);
+  border-top: 1px solid var(--border);
+}
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-m) var(--space-l);
+  padding: var(--space-l) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-item-name {
+  flex: 1 1 100%;
+  font-family: var(--serif);
+  font-size: var(--font-h3);
+  color: var(--text-h);
+}
+
+.cart-item-subtotal {
+  color: var(--text-h);
+}
+
+/* ---------- Quantity and remove buttons ---------- */
+.quantity-button,
+.remove-button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  transition:
+    background-color var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--black);
+}
+
+.quantity-button {
+  width: 40px;
+  height: 40px;
+  font-size: var(--font-l);
+  color: var(--black);
+}
+
+.quantity-button:hover {
+  color: var(--white);
+  background: var(--black);
+}
+
+.quantity {
+  min-width: 3ch;
+  text-align: center;
+  color: var(--text-h);
+}
+
+.remove-button {
+  padding: var(--space-xs) 0;
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+}
+
+.remove-button:hover {
+  color: var(--gold-text);
+  border-bottom-color: var(--gold);
+}
+
+/* ---------- Total ---------- */
+.cart-summary {
+  font-family: var(--serif);
+  font-size: var(--font-h3);
+  color: var(--text-h);
+  margin-bottom: var(--space-l);
+}
+
+/* .button sets display, which would otherwise override the hidden attribute */
+.clear-cart[hidden] {
+  display: none;
+}
+
+/* ---------- Larger screens ---------- */
+@media (min-width: 600px) {
+  .cart-item-name {
+    flex-basis: auto;
+    flex-grow: 1;
+  }
+}

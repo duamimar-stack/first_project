@@ -42,7 +42,7 @@
           </p>
           <a class="button" href="#products">Discover the collection</a>
         </div>
-        <img class="hero-image" src="/images/bags.svg" alt="" width="400" height="500" />
+        <img class="hero-image" src="/images/hero.svg" alt="" width="400" height="500" />
       </section>
 
       <section class="products" id="products" aria-labelledby="products-title">
@@ -97,8 +97,10 @@
 
         <p class="result-count" aria-live="polite"></p>
 
-        <!-- Product cards are created in src/main.js with map() -->
-        <div class="product-grid"></div>
+        <!-- Product cards are drawn by src/modules/products/products.ui.ts -->
+        <div class="product-grid">
+          <p class="no-results">Loading products…</p>
+        </div>
       </section>
 
       <section class="cart" id="cart" aria-labelledby="cart-title">

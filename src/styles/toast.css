@@ -1,0 +1,28 @@
+/* Styles for the toast made by src/shared/ui/toast.ts */
+
+.toast {
+  position: fixed;
+  inset-inline: var(--space-m);
+  bottom: var(--space-l);
+  margin: 0 auto;
+  max-width: 320px;
+  padding: var(--space-m) var(--space-l);
+  font-size: var(--font-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--white);
+  background: var(--black);
+  border-bottom: 2px solid var(--gold);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--transition),
+    transform var(--transition);
+  pointer-events: none;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
